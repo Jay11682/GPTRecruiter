@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" />
     <title>GPT Recruiter</title>
     <style>
         body {
@@ -34,7 +35,7 @@
             width: 100%;
             padding: 15px;
             margin: 10px 0;
-            background: #007bff;
+            background: #34568B;
             color: #fff;
             border: none;
             border-radius: 5px;
@@ -42,7 +43,7 @@
             font-size: 16px;
         }
         button:hover {
-            background: #0056b3;
+            background: #2d4b78;
         }
         .result {
             margin: 20px 0;
@@ -53,17 +54,40 @@
         .gradient-bar {
             height: 30px;
             border-radius: 5px;
-            background: linear-gradient(to right, red, green);
+            background: linear-gradient(to right, red, 45%, green);
             margin: 10px 0;
         }
         .score-indicator {
             height: 100%;
-            background: #007bff;
+            background: #34568B;
             text-align: center;
             line-height: 30px;
             font-weight: bold;
             border-radius: 5px;
             color: #fff;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px; /* Adjust spacing as needed */
+            padding: 10px 0;
+            color: #000000;
+            border-radius: 5px;
+        }
+        footer ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        footer ul li {
+            display: inline-block;
+            margin-right: 10px;
+        }
+        footer a {
+            text-decoration: none;
+            font-size: 24px;
+            color: #000000;
+        }
+        footer a:hover {
+            opacity: 0.8;
         }
     </style>
 </head>
@@ -81,27 +105,12 @@
             <p id="reject-reason">Missing Qualifications: </p>
         </div>
     </div>
-    <script>
-        async function evaluateCandidate() {
-            const jobDescription = document.getElementById('job-description').value;
-            const resumeText = document.getElementById('resume-text').value;
-
-            const response = await fetch('/evaluate', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ job_description: jobDescription, resume_text: resumeText })
-            });
-
-            const data = await response.json();
-            document.getElementById('quality-score').innerText = 'Quality Score: ' + data.quality_score;
-            document.getElementById('reject-reason').innerText = 'Missing Qualifications: ' + data.reject_reason;
-
-            const scoreIndicator = document.getElementById('score-indicator');
-            scoreIndicator.style.width = (data.quality_score * 10) + '%';
-            scoreIndicator.innerText = data.quality_score.toFixed(2);
-        }
-    </script>
+    <footer>
+        <ul>
+            <li><a href="https://www.linkedin.com/in/jay-snellings/"><i class="fab fa-linkedin"></i></a></li>
+            <li><a href="https://github.com/Jay11682"><i class="fab fa-github"></i></a></li>
+        </ul>
+        <p>&copy; 2024 Jay Snellings. All Rights Reserved.</p>
+    </footer>
 </body>
 </html>
