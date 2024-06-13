@@ -8,3 +8,4 @@ OPENAI_API_KEY=sk-... your OpenAI API Key
 
 To run, simply type "python3 app.py" and navigate to http://127.0.0.1:5000
 
+![Image of the tool](images/image.png)
