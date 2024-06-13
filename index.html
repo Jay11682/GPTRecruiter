@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPT Recruiter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .result {
+            margin: 20px 0;
+            padding: 10px;
+            border-radius: 5px;
+            background: #f1f1f1;
+        }
+        .gradient-bar {
+            height: 30px;
+            border-radius: 5px;
+            background: linear-gradient(to right, red, green);
+            margin: 10px 0;
+        }
+        .score-indicator {
+            height: 100%;
+            background: #007bff;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            border-radius: 5px;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>GPT Recruiter</h1>
+        <textarea id="job-description" rows="6" placeholder="Paste job description here"></textarea>
+        <textarea id="resume-text" rows="6" placeholder="Paste resume here"></textarea>
+        <button onclick="evaluateCandidate()">Evaluate</button>
+        <div class="result" id="result">
+            <div class="gradient-bar">
+                <div class="score-indicator" id="score-indicator"></div>
+            </div>
+            <p id="quality-score">Quality Score: </p>
+            <p id="reject-reason">Reject Reason: </p>
+        </div>
+    </div>
+    <script>
+        async function evaluateCandidate() {
+            const jobDescription = document.getElementById('job-description').value;
+            const resumeText = document.getElementById('resume-text').value;
+
+            const response = await fetch('/evaluate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ job_description: jobDescription, resume_text: resumeText })
+            });
+
+            const data = await response.json();
+            document.getElementById('quality-score').innerText = 'Score: ' + data.quality_score;
+            document.getElementById('reject-reason').innerText = 'Missing Qualifications: ' + data.reject_reason;
+
+            const scoreIndicator = document.getElementById('score-indicator');
+            scoreIndicator.style.width = (data.quality_score * 10) + '%';
+            scoreIndicator.innerText = data.quality_score.toFixed(2);
+        }
+    </script>
+</body>
+</html>
