@@ -65,10 +65,12 @@
             font-weight: bold;
             border-radius: 5px;
             color: #fff;
+            width: 0; /* Start with zero width */
+            transition: width 0.5s ease; /* Smooth transition */
         }
         footer {
             text-align: center;
-            margin-top: 20px; /* Adjust spacing as needed */
+            margin-top: 20px;
             padding: 10px 0;
             color: #000000;
             border-radius: 5px;
@@ -102,7 +104,7 @@
                 <div class="score-indicator" id="score-indicator"></div>
             </div>
             <p id="quality-score">Quality Score: </p>
-            <p id="reject-reason">Missing Qualifications: </p>
+            <p id="reject-reason">Reject Reason: </p>
         </div>
     </div>
     <footer>
@@ -112,5 +114,27 @@
         </ul>
         <p>&copy; 2024 Jay Snellings. All Rights Reserved.</p>
     </footer>
+    <script>
+        function evaluateCandidate() {
+            const jobDescription = document.getElementById('job-description').value;
+            const resumeText = document.getElementById('resume-text').value;
+
+            fetch('/evaluate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ job_description: jobDescription, resume_text: resumeText }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Update UI elements with response data
+                document.getElementById('score-indicator').style.width = `${data.quality_score * 10}%`; // Scale to 0-100% for width
+                document.getElementById('quality-score').textContent = `Quality Score: ${data.quality_score}`;
+                document.getElementById('reject-reason').textContent = `Reject Reason: ${data.reject_reason}`;
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
 </body>
 </html>
