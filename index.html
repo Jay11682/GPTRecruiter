@@ -78,7 +78,7 @@
                 <div class="score-indicator" id="score-indicator"></div>
             </div>
             <p id="quality-score">Quality Score: </p>
-            <p id="reject-reason">Reject Reason: </p>
+            <p id="reject-reason">Missing Qualifications: </p>
         </div>
     </div>
     <script>
@@ -95,7 +95,7 @@
             });
 
             const data = await response.json();
-            document.getElementById('quality-score').innerText = 'Score: ' + data.quality_score;
+            document.getElementById('quality-score').innerText = 'Quality Score: ' + data.quality_score;
             document.getElementById('reject-reason').innerText = 'Missing Qualifications: ' + data.reject_reason;
 
             const scoreIndicator = document.getElementById('score-indicator');
