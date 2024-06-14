@@ -104,7 +104,7 @@
                 <div class="score-indicator" id="score-indicator"></div>
             </div>
             <p id="quality-score">Quality Score: </p>
-            <p id="reject-reason">Reject Reason: </p>
+            <p id="reject-reason">Missing Qualifications: </p>
         </div>
     </div>
     <footer>
@@ -131,7 +131,7 @@
                 // Update UI elements with response data
                 document.getElementById('score-indicator').style.width = `${data.quality_score * 10}%`; // Scale to 0-100% for width
                 document.getElementById('quality-score').textContent = `Quality Score: ${data.quality_score}`;
-                document.getElementById('reject-reason').textContent = `Reject Reason: ${data.reject_reason}`;
+                document.getElementById('reject-reason').textContent = `Missing Qualifications: ${data.reject_reason}`;
             })
             .catch(error => console.error('Error:', error));
         }
